@@ -1,10 +1,7 @@
 package com.lta.apis.controller;
 
 import com.lta.apis.entity.Message;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +29,11 @@ public class MessageController {
                 .findFirst();
 
         return message.orElse(null);
+    }
+
+    @PostMapping
+    public Message crearMensaje(@RequestBody Message message){
+        mensajes.add(message);
+        return message;
     }
 }
