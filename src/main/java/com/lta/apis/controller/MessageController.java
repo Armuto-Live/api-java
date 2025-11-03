@@ -36,4 +36,9 @@ public class MessageController {
         mensajes.add(message);
         return message;
     }
+
+    @DeleteMapping("{id}")
+    public void eliminarMensaje(@PathVariable int id){
+        mensajes.removeIf(m -> m.getId() == id);
+    }
 }
