@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 */
 
 // Indicamos que esta clase es un controlador web en APIs REST
-@RestController
+//@RestController
 
 // configuramos una url base para todos los métodos del controlador
-@RequestMapping("/micontroller")
+//@RequestMapping("/micontroller")
 public class SaludoController {
 
     @GetMapping("saludo")

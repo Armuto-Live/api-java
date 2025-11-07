@@ -1,0 +1,72 @@
+[
+  {
+    "nombreProducto": "Netflix",
+    "descripcionProducto": "Suscripción mensual estándar",
+    "precio": 12.99,
+    "cantidad": 50,
+    "estadoProducto": "DISPONIBLE"
+  },
+  {
+    "nombreProducto": "Disney+",
+    "descripcionProducto": "Cuenta premium anual",
+    "precio": 9.99,
+    "cantidad": 40,
+    "estadoProducto": "DISPONIBLE"
+  },
+  {
+    "nombreProducto": "HBO Max",
+    "descripcionProducto": "Plan familiar HD",
+    "precio": 7.50,
+    "cantidad": 30,
+    "estadoProducto": "DISPONIBLE"
+  },
+  {
+    "nombreProducto": "Prime Video",
+    "descripcionProducto": "Streaming de Amazon Prime Video",
+    "precio": 3.00,
+    "cantidad": 10,
+    "estadoProducto": "DISPONIBLE"
+  },
+  {
+    "nombreProducto": "Paramount+",
+    "descripcionProducto": "Cuenta individual 1 mes",
+    "precio": 6.00,
+    "cantidad": 25,
+    "estadoProducto": "DISPONIBLE"
+  },
+  {
+    "nombreProducto": "Apple TV+",
+    "descripcionProducto": "Suscripción mensual básica",
+    "precio": 5.99,
+    "cantidad": 20,
+    "estadoProducto": "DISPONIBLE"
+  },
+  {
+    "nombreProducto": "Crunchyroll",
+    "descripcionProducto": "Plan Mega Fan",
+    "precio": 4.99,
+    "cantidad": 15,
+    "estadoProducto": "DISPONIBLE"
+  },
+  {
+    "nombreProducto": "Spotify Premium",
+    "descripcionProducto": "Suscripción mensual individual",
+    "precio": 10.00,
+    "cantidad": 60,
+    "estadoProducto": "DISPONIBLE"
+  },
+  {
+    "nombreProducto": "YouTube Premium",
+    "descripcionProducto": "Cuenta familiar 1 mes",
+    "precio": 11.00,
+    "cantidad": 35,
+    "estadoProducto": "DISPONIBLE"
+  },
+  {
+    "nombreProducto": "Canva Pro",
+    "descripcionProducto": "Cuenta premium con acceso a todas las herramientas",
+    "precio": 15.00,
+    "cantidad": 12,
+    "estadoProducto": "DISPONIBLE"
+  }
+]
