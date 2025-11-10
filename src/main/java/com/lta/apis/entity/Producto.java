@@ -32,4 +32,6 @@ public class Producto {
     @Column(name = "estado", nullable = false)
     private EstadoProducto estadoProducto;
 
+    @ManyToOne
+    private Categoria categoria;
 }
