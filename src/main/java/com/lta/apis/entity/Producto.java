@@ -13,10 +13,10 @@ import lombok.NoArgsConstructor;
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_producto")
+    @Column(name = "id")
     private Long idProducto;
 
-    @Column(name = "nombre_producto", nullable = false, length = 100)
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombreProducto;
 
     @Column(name = "descripcion")

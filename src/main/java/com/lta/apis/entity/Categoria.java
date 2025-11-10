@@ -13,14 +13,10 @@ public class Categoria {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_categoria")
+    @Column(name = "id")
     private Long idCategoria;
 
-    @Column(name = "nombre_categoria", nullable = false, length = 50)
+    @Column(name = "nombre", nullable = false, length = 50)
     private String nombreCategoria;
-
-
-
-
 
 }
