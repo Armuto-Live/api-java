@@ -1,7 +1,9 @@
 package com.lta.apis.service.impl;
 
+import com.lta.apis.entity.Categoria;
 import com.lta.apis.entity.EstadoProducto;
 import com.lta.apis.entity.Producto;
+import com.lta.apis.repository.CategoriaRepository;
 import com.lta.apis.repository.ProductoRepository;
 import com.lta.apis.service.ProductoService;
 import lombok.SneakyThrows;
@@ -15,9 +17,17 @@ import java.util.Optional;
 public class ProductoServiceImpl implements ProductoService {
     @Autowired
     private ProductoRepository productoRepository;
+    @Autowired
+    private CategoriaRepository categoriaRepository;
 
     @Override
-    public Producto registrarProducto(Producto producto) {
+    @SneakyThrows
+    public Producto registrarProducto(Long categoriaId, Producto producto) {
+        Categoria categoria = categoriaRepository.findById(categoriaId)
+                .orElseThrow(() -> new Exception("No se encontró la categoria"));
+
+        producto.setCategoria(categoria);
+
         return productoRepository.save(producto);
     }
 
@@ -47,6 +57,12 @@ public class ProductoServiceImpl implements ProductoService {
         productoExistente.setPrecio(producto.getPrecio());
         productoExistente.setCantidad(producto.getCantidad());
         productoExistente.setEstadoProducto(producto.getEstadoProducto());
+
+        if(producto.getCategoria() != null && producto.getCategoria().getIdCategoria() != null ){
+            Categoria categoria = categoriaRepository.findById(producto.getCategoria().getIdCategoria())
+                    .orElseThrow(() -> new Exception("No se encontró la categoria"));
+            productoExistente.setCategoria(categoria);
+        }
 
         return productoRepository.save(productoExistente);
     }

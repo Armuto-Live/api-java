@@ -19,10 +19,25 @@ public class ProductoController {
     @Autowired
     private ProductoService productoService;
 
-    @PostMapping("/registrar")
-    public ResponseEntity<?> registrarProducto(@RequestBody Producto producto){
-        Producto nuevoProducto = productoService.registrarProducto(producto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(nuevoProducto);
+    @PostMapping("/registrar/{categoriaId}")
+    public ResponseEntity<?> registrarProducto(
+            @PathVariable Long categoriaId,
+            @RequestParam("nombreProducto") String nombreProducto,
+            @RequestParam("descripcion") String descripcion,
+            @RequestParam("precio") Double precio,
+            @RequestParam("cantidad") int cantidad,
+            @RequestParam("estado") EstadoProducto estado){
+
+        Producto producto = new Producto();
+        producto.setNombreProducto(nombreProducto);
+        producto.setDescripcionProducto(descripcion);
+        producto.setPrecio(precio);
+        producto.setCantidad(cantidad);
+        producto.setEstadoProducto(estado);
+
+        Producto productoBBDD = productoService.registrarProducto(categoriaId, producto);
+        //Producto nuevoProducto = productoService.registrarProducto(producto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productoBBDD);
     }
 
     @GetMapping
@@ -46,17 +61,23 @@ public class ProductoController {
     }
 
     @PutMapping("/actualizar/{idProducto}")
-    public ResponseEntity<?> actualizarProducto(@PathVariable Long idProducto, @RequestBody Producto producto){
+    public ResponseEntity<?> actualizarProducto(
+            @PathVariable Long idProducto,
+            @RequestParam("nombreProducto") String nombreProducto,
+            @RequestParam("descripcion") String descripcion,
+            @RequestParam("precio") Double precio,
+            @RequestParam("cantidad") int cantidad,
+            @RequestParam("estado") EstadoProducto estado){
         try {
-            Producto productoActualizado = new Producto();
-            productoActualizado.setNombreProducto(producto.getNombreProducto());
-            productoActualizado.setDescripcionProducto(producto.getDescripcionProducto());
-            productoActualizado.setPrecio(producto.getPrecio());
-            productoActualizado.setCantidad(producto.getCantidad());
-            productoActualizado.setEstadoProducto(producto.getEstadoProducto());
+            Producto producto = new Producto();
+            producto.setNombreProducto(nombreProducto);
+            producto.setDescripcionProducto(descripcion);
+            producto.setPrecio(precio);
+            producto.setCantidad(cantidad);
+            producto.setEstadoProducto(estado);
 
-            Producto productoBBDD = productoService.actualizarProducto(idProducto, productoActualizado);
-            return ResponseEntity.ok(productoActualizado);
+            Producto productoBBDD = productoService.actualizarProducto(idProducto, producto);
+            return ResponseEntity.ok(productoBBDD);
         }catch (Exception exception){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Producto no encontrado");
         }
