@@ -1,10 +1,11 @@
 package com.lta.apis.service.impl;
 
 import com.lta.apis.entity.Categoria;
+import com.lta.apis.exceptions.BadRequestException;
+import com.lta.apis.exceptions.ResourseNotFoundException;
 import com.lta.apis.repository.CategoriaRepository;
 import com.lta.apis.service.CategoriaService;
 import lombok.SneakyThrows;
-import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,6 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
-    @SneakyThrows
     @Override
     public Categoria crearCategoria(Categoria categoria) {
         if(categoriaRepository.existsByNombreCategoria(categoria.getNombreCategoria())){
@@ -37,10 +37,9 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
-    @SneakyThrows
     public Categoria actualizarCategoria(Long idCategoria, Categoria categoria) {
         Categoria categoriaExistente = categoriaRepository.findById(idCategoria)
-                .orElseThrow(() -> new Exception("Categoria no encontrada"));
+                .orElseThrow(() -> new ResourseNotFoundException("Categoria no encontrada"));
 
         categoriaExistente.setNombreCategoria(categoria.getNombreCategoria());
 
@@ -48,12 +47,11 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
-    @SneakyThrows
     public void eliminarCategoria(Long idCategoria) {
         Optional<Categoria> categoriaExistente = categoriaRepository.findById(idCategoria);
 
         if (!categoriaExistente.isPresent()){
-            throw new Exception("Categoria no encontrada para eliminar");
+            throw new ResourseNotFoundException("Categoria no encontrada para eliminar");
         }
 
         categoriaRepository.deleteById(idCategoria);

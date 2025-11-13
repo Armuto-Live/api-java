@@ -1,7 +1,9 @@
 package com.lta.apis.controller;
 
 import com.lta.apis.entity.Categoria;
+import com.lta.apis.exceptions.ResourseNotFoundException;
 import com.lta.apis.service.CategoriaService;
+import jakarta.validation.Valid;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,7 +21,7 @@ public class CategoriaController {
     private CategoriaService categoriaService;
 
     @PostMapping("/registrar")
-    public ResponseEntity<Categoria> crearCategoria(@RequestBody Categoria categoria){
+    public ResponseEntity<Categoria> crearCategoria(@Valid @RequestBody Categoria categoria){
         Categoria nuevaCategoria = categoriaService.crearCategoria(categoria);
 
         return new ResponseEntity<>(nuevaCategoria, HttpStatus.CREATED);
@@ -33,26 +35,24 @@ public class CategoriaController {
     }
 
     @GetMapping("/buscar/id/{idCategoria}")
-    @SneakyThrows
     public ResponseEntity<Categoria> obtenerCategoriaPorId(@PathVariable Long idCategoria){
         Optional<Categoria> categoriaOptional = categoriaService.obtenerCategoriaPorId(idCategoria);
 
         if (categoriaOptional.isPresent()){
             return new ResponseEntity<>(categoriaOptional.get(), HttpStatus.OK);
         }else{
-            throw new Exception("Categoria no encontrada");
+            throw new ResourseNotFoundException("Categoria no encontrada");
         }
     }
 
     @PutMapping("/actualizar/{idCategoria}")
-    @SneakyThrows
     public ResponseEntity<Categoria> actualizarCategoria(@PathVariable Long idCategoria, @RequestBody Categoria categoria){
         try {
             Categoria categoriaActualizada = categoriaService.actualizarCategoria(idCategoria, categoria);
             if (categoriaActualizada != null){
                 return new ResponseEntity<>(categoriaActualizada, HttpStatus.OK);
             }else {
-                throw new Exception("Categoria no encontrada");
+                throw new ResourseNotFoundException("Categoria no encontrada");
             }
         }catch (Exception exception){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

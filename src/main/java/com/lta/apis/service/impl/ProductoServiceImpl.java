@@ -3,6 +3,7 @@ package com.lta.apis.service.impl;
 import com.lta.apis.entity.Categoria;
 import com.lta.apis.entity.EstadoProducto;
 import com.lta.apis.entity.Producto;
+import com.lta.apis.exceptions.ResourseNotFoundException;
 import com.lta.apis.repository.CategoriaRepository;
 import com.lta.apis.repository.ProductoRepository;
 import com.lta.apis.service.ProductoService;
@@ -21,10 +22,9 @@ public class ProductoServiceImpl implements ProductoService {
     private CategoriaRepository categoriaRepository;
 
     @Override
-    @SneakyThrows
     public Producto registrarProducto(Long categoriaId, Producto producto) {
         Categoria categoria = categoriaRepository.findById(categoriaId)
-                .orElseThrow(() -> new Exception("No se encontró la categoria"));
+                .orElseThrow(() -> new ResourseNotFoundException("No se encontró la categoria"));
 
         producto.setCategoria(categoria);
 
@@ -47,10 +47,9 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    @SneakyThrows
     public Producto actualizarProducto(Long idProducto, Producto producto) {
         Producto productoExistente = productoRepository.findByIdProducto(idProducto).
-                orElseThrow(() -> new Exception("Producto no encontrado"));
+                orElseThrow(() -> new ResourseNotFoundException("Producto no encontrado"));
 
         productoExistente.setNombreProducto(producto.getNombreProducto());
         productoExistente.setDescripcionProducto(producto.getDescripcionProducto());
@@ -60,7 +59,7 @@ public class ProductoServiceImpl implements ProductoService {
 
         if(producto.getCategoria() != null && producto.getCategoria().getIdCategoria() != null ){
             Categoria categoria = categoriaRepository.findById(producto.getCategoria().getIdCategoria())
-                    .orElseThrow(() -> new Exception("No se encontró la categoria"));
+                    .orElseThrow(() -> new ResourseNotFoundException("No se encontró la categoria"));
             productoExistente.setCategoria(categoria);
         }
 
@@ -68,19 +67,17 @@ public class ProductoServiceImpl implements ProductoService {
     }
 
     @Override
-    @SneakyThrows
     public void eliminarProducto(Long idProducto) {
         productoRepository.findByIdProducto(idProducto).
-                orElseThrow(() -> new Exception("Producto no encontrado"));
+                orElseThrow(() -> new ResourseNotFoundException("Producto no encontrado"));
 
         productoRepository.deleteById(idProducto);
     }
 
     @Override
-    @SneakyThrows
     public Producto cambiarEstadoProducto(Long idProducto, EstadoProducto nuevoEstadoProducto) {
         Producto productoExistente =  productoRepository.findByIdProducto(idProducto)
-                .orElseThrow(() -> new Exception("Producto no encontrado"));
+                .orElseThrow(() -> new ResourseNotFoundException("Producto no encontrado"));
 
         productoExistente.setEstadoProducto(nuevoEstadoProducto);
         return productoRepository.save(productoExistente);
